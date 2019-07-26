@@ -1,0 +1,2 @@
+# spells
+Magic spells
