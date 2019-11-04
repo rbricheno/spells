@@ -1,3 +1,4 @@
+ # Spell to get a root prompt when you don't know the root password but have physical access
  1. Hold down shift when turning the power on to enter GRUB
  2. Edit the default boot option
  3. Find the line that starts `linux`
