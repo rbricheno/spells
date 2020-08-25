@@ -1,7 +1,7 @@
 # Get a timezone aware version of the current time
 # without previously knowing the timezone
 
-from datetime import datetime
+import datetime
 
-tz = datetime.now().astimezone().tzinfo
-now = datetime.now(tz)
+tz = datetime.datetime.now(datetime.timezone(datetime.timedelta(0))).astimezone().tzinfo
+now = datetime.datetime.now(tz)
