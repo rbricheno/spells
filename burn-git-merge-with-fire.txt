@@ -1,0 +1,61 @@
+So you made a local change, and that created a confilct when you tried to push. You just want to undo the conflict and go back to whatever is upstream, abandoning your local work.
+
+git commit -m "My stupid change"
+
+You tried to 'git push' and then 
+
+To ssh://git.blah.com/owner/repo.git
+ ! [rejected]            master -> master (fetch first)
+error: failed to push some refs to 'ssh://user@git.blah.com/owner/repo.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+So you try to git pull and
+
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (5/5), done.
+remote: Total 5 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (5/5), 1.38 KiB | 1.38 MiB/s, done.
+From ssh://git.blah.com/owner/repo
+   3c418627e..6e2b3592e  master     -> origin/master
+Auto-merging file/fail/whale
+CONFLICT (content): Merge conflict in file/fail/whale
+Automatic merge failed; fix conflicts and then commit the result.
+
+So you try to 'git reset --hard HEAD'
+
+but then
+HEAD is now at 6ff08d873 My stupid change
+
+The answer is, of course:
+
+git reset --hard HEAD~1
+git pull
+
+Then you're back in the room.
+
+*****
+
+Apparently the official way to do this (from https://ohshitgit.com/) is:
+
+# get the lastest state of origin
+git fetch origin
+git checkout master
+git reset --hard origin/master
+# delete untracked files and directories
+git clean -d --force
+# repeat checkout/reset/clean for each borked branch
+
+Or you can try and be clever with reflog
+
+git reflog
+# you will see a list of every thing you've
+# done in git, across all branches!
+# each one has an index HEAD@{index}
+# find the one before you broke everything
+git reset HEAD@{index}
+# magic time machine
