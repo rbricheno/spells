@@ -10,7 +10,8 @@ Where multiple chain certificates are used, they all must be supplied, in the co
 
 To make something like this:
 
-```user $ cat combined.crt
+```
+user $ cat combined.crt
 
 -----BEGIN CERTIFICATE-----
 blah
